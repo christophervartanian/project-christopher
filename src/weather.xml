@@ -1,0 +1,11 @@
+<!--https://www.youtube.com/watch?v=zZoboXqsCNw&ab_channel=Randomcode-->
+<!--Used the video above for help setting up APIs in Java-->
+<!--NOT SURE IF WE ARE USING THIS FILE.-->
+
+<dependencies>
+    <dependency>
+        <groupId>com.googlecode.jsoh-simple</groupIds>
+        <artifactId>json-simple</artifactId>
+        <version>1.1.1</version>
+    </dependency>
+</dependencies>
