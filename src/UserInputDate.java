@@ -15,6 +15,9 @@ public class UserInputDate {
 		this.inputDateScanner = new Scanner(System.in);
 	}
 	
+	public Date getDateWeatherData() {
+		return this.dateWeatherData;
+	}
 	
 	public void gatherUserInput() {
 		weatherFileScanner.useDelimiter(",");
