@@ -3,55 +3,36 @@ package src;
 import java.io.*;
 import java.util.Scanner;
 
-
-
-
 public class WeatherData {
-	private String date;
-
-	public WeatherData() {
-		this.date = "";
-	}
-
-	private void setDate(String inputDate) {
-		this.date = inputDate;
-	}
-
-	private String getDate() {
-		return this.date;
-	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-
-		WeatherData dateWeatherData = new WeatherData();
-		Scanner sc = new Scanner(new File("data/H_Temp.csv"));
-		sc.useDelimiter(",");
+		Date dateWeatherData = new Date();
+		Scanner weatherFileScanner = new Scanner(new File("data/H_Temp.csv"));
+		weatherFileScanner.useDelimiter(",");
 		promptUserForDate(dateWeatherData);
-		printDateWeather(dateWeatherData, sc);
-		sc.close();
-
+		setDateWeatherData(dateWeatherData, weatherFileScanner);
 	}
 
-	private static void promptUserForDate(WeatherData dateWeather) {
+	private static void promptUserForDate(Date dateWeatherData) {
 		boolean validInputDate = false;
 		System.out.println("Please enter a date between 1940 and 2026 with the format YYYYMMDD: ");
-		Scanner dateIn = new Scanner(System.in);
-		storeInputDate(dateWeather, validInputDate, dateIn);
-		dateIn.close();
+		Scanner inputDateScanner = new Scanner(System.in);
+		checkInputValidFormat(dateWeatherData, validInputDate, inputDateScanner);
+		inputDateScanner.close();
 	}
 
-	private static void storeInputDate(WeatherData dateWeather, boolean validInput, Scanner dateIn) {
+	private static void checkInputValidFormat(Date dateWeatherData, boolean validInput, Scanner inputDateScanner) {
 		while (validInput == false) {
-			String chosenDate = dateIn.nextLine();
+			String chosenDate = inputDateScanner.nextLine();
 			if (chosenDate.length() == 8) {
-				validInput = checkInputInValidDateRange(dateWeather, validInput, chosenDate);
+				validInput = checkInputInValidDateRange(dateWeatherData, validInput, chosenDate);
 			} else {
 				System.out.println("Please enter a valid date");
 			}
 		}
 	}
 
-	private static boolean checkInputInValidDateRange(WeatherData dateWeather, boolean validInput, String chosenDate) {
+	private static boolean checkInputInValidDateRange(Date dateWeatherData, boolean validInput, String chosenDate) {
 		int year = Integer.parseInt(chosenDate.substring(0, 4));
 		int month = Integer.parseInt(chosenDate.substring(4, 6));
 		int day = Integer.parseInt(chosenDate.substring(6));
@@ -63,23 +44,29 @@ public class WeatherData {
 			System.out.println("Please enter a valid date");
 		} else {
 			validInput = true;
-			dateWeather.setDate(chosenDate);
+			dateWeatherData.setDateString(chosenDate);
 		}
 		return validInput;
 	}
 
-	private static void printDateWeather(WeatherData inputedDate, Scanner sc) {
-		while (sc.hasNextLine()) {
-			String line = sc.nextLine();
-			if (line.contains(inputedDate.getDate())) {
+	private static void setDateWeatherData(Date dateWeatherData, Scanner weatherFileScanner) {
+		while (weatherFileScanner.hasNextLine()) {
+			String line = weatherFileScanner.nextLine();
+			if (line.contains(dateWeatherData.getDateString())) {
 				String[] contents = line.split(",");
-				System.out.println("Date: " + contents[0]);
-				System.out.println("Real Temperature Low: " + contents[1]);
-				System.out.println("Real Temperature High: " + contents[2]);
-				System.out.println("Predicted Temperature Low: " + contents[3]);
-				System.out.println("Predicted Temperature High: " + contents[4]);
-
+				dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
+				dateWeatherData.setRealTemperatures(contents[3], contents[4]);
+				printDateWeatherData(dateWeatherData);
 			}
 		}
+		weatherFileScanner.close();
+	}
+
+	private static void printDateWeatherData(Date dateWeatherData) {
+		System.out.println("Date: " + dateWeatherData.getDateString());
+		System.out.println("Real Temperature Low: " + dateWeatherData.getPredLow());
+		System.out.println("Real Temperature High: " + dateWeatherData.getPredHigh());
+		System.out.println("Predicted Temperature Low: " + dateWeatherData.getRealLow());
+		System.out.println("Predicted Temperature High: " + dateWeatherData.getRealHigh());
 	}
 }
