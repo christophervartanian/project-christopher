@@ -1,7 +1,7 @@
 # project-christopher-isha-noah-roshan
 #### Project Description
 
-Our project is meant to be similar to Apple's Weather App. We plan to be able to show actual and predicted temperatures and precipitation for a given date or date range. 
+Our project is meant to be similar to Apple's Weather App. We plan to be able to show actual and predicted temperatures and precipitation for a given date or date range. Currently we are only using data for Honolulu, HI.
 
 #### What user stories were completed this iteration?
 
@@ -13,10 +13,11 @@ We will potentially use a weather API which will allow for a lot more user stori
 * Computing the average temperature over an inputted date range.
 * Showing the actual and predicted precipitation for an inputted date.
 * Computing the total precipitation over an inputted date range.
+* Allowing the user to choose the weather location.
 
 #### Is there anything that you implemented but doesn't currently work?
 
-The API we were trying to implement did not end up working. We still have an XML file in because we will try implementing one more time before the next iteration before departing from the idea entirely.
+The API we were trying to implement did not end up working. We still have an XML file in because we will try implementing one more time before the next iteration before departing from the idea entirely. Additionally, we had issues importing the packages for unit tests so we were not able to verify that our unit tests pass. Finally, our system for checking valid input dates is not entirely correct as the user is still allowed to input invalid dates (February 30th for instance) and can input a 8 character long non-numerical string. We plan on fixing these issues in the next Iteration.
 
 #### What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
 * javac src/WeatherData.java
