@@ -19,5 +19,6 @@ We will potentially use a weather API which will allow for a lot more user stori
 The API we were trying to implement did not end up working. We still have an XML file in because we will try implementing one more time before the next iteration before departing from the idea entirely.
 
 #### What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
-
+* javac src/WeatherData.java
+* java src/WeatherData
 
