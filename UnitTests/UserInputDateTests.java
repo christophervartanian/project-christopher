@@ -18,6 +18,7 @@ public class UserInputDateTests {
 		assertTrue("69.5".equals(d.getRealLow()));
 		assertTrue("82.4".equals(d.getRealHigh()));
 	}
+	@Test
 	void testUserInputDate19770303() {
 		UserInputDate userInput = new UserInputDate();
 		userInput.gatherUserInput();
