@@ -35,7 +35,7 @@ public class UserInputDate {
 		while (validInputDate == false) {
 			String chosenDate = inputDateScanner.nextLine();
 			boolean inputIsNumeric = isNumeric(chosenDate);
-			if (chosenDate.length() == 8 && inputIsNumeric ) {
+			if (chosenDate.length() == 8 && inputIsNumeric) {
 				validInputDate = checkInputInValidDateRange(chosenDate);
 			} else {
 				System.out.println("Please enter a valid date");
@@ -87,7 +87,7 @@ public class UserInputDate {
 		} else if ((YYYYMMDD[2] < 01) || (YYYYMMDD[2] > 31)) {
 			isValidDate = false;
 		}
-		else if (YYYYMMDD[0] == 1940 && (YYYYMMDD[1] < 05) || (YYYYMMDD[2] < 16)) {
+		else if ((YYYYMMDD[0] == 1940) && YYYYMMDD[1] < 05 && YYYYMMDD[2] < 16) {
 			isValidDate = false;
 		}
 		return isValidDate;
