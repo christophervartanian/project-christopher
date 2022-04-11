@@ -22,7 +22,7 @@ public class UserInputDate {
 	public void gatherUserInput() {
 		weatherFileScanner.useDelimiter(",");
 		promptUserForDate();
-		setDateWeatherData();
+		searchForDateInCSV();
 	}
 
 	public void promptUserForDate() {
@@ -90,17 +90,25 @@ public class UserInputDate {
 		return isValidDate;
 	}
 
-	public void setDateWeatherData() {
+	public void searchForDateInCSV() {
 		while (weatherFileScanner.hasNextLine()) {
 			String line = weatherFileScanner.nextLine();
-			if (line.contains(dateWeatherData.getDateString())) {
-				String[] contents = line.split(",");
-				dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
-				dateWeatherData.setRealTemperatures(contents[3], contents[4]);
-				printDateWeatherData();
-			}
+			checkDateInCSV(line);
 		}
 		weatherFileScanner.close();
+	}
+
+	private void checkDateInCSV(String line) {
+		if (line.contains(dateWeatherData.getDateString())) {
+			setWeatherData(line);
+		}
+	}
+
+	private void setWeatherData(String line) {
+		String[] contents = line.split(",");
+		dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
+		dateWeatherData.setRealTemperatures(contents[3], contents[4]);
+		printDateWeatherData();
 	}
 
 	public void printDateWeatherData() {
