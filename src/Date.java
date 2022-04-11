@@ -6,6 +6,7 @@ public class Date {
 	private String predTempHigh;
 	private String realTempLow;
 	private String realTempHigh;
+	private String realPrecip;
 	
 
 	public Date() {
