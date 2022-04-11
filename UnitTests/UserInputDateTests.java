@@ -1,6 +1,8 @@
 package UnitTests;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.Test;
 
 import src.Date;
@@ -8,7 +10,7 @@ import src.UserInputDate;
 
 public class UserInputDateTests {
 	@Test
-	void testUserInputDate20200404() {
+	void testUserInputDate20200404() throws FileNotFoundException {
 		UserInputDate userInput = new UserInputDate();
 		userInput.gatherUserInput();
 		Date d = userInput.getDateWeatherData();
@@ -19,7 +21,7 @@ public class UserInputDateTests {
 		assertTrue("82.4".equals(d.getRealHigh()));
 	}
 	@Test
-	void testUserInputDate19770303() {
+	void testUserInputDate19770303() throws FileNotFoundException {
 		UserInputDate userInput = new UserInputDate();
 		userInput.gatherUserInput();
 		Date d = userInput.getDateWeatherData();
