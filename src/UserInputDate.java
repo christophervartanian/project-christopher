@@ -26,7 +26,7 @@ public class UserInputDate {
 	}
 
 	public void promptUserForDate() {
-		System.out.println("Please enter a date between 1940 and 2026 with the format YYYYMMDD: ");
+		System.out.println("Please enter a date between 1940/05/16 and 2026/12/31 with the format YYYYMMDD: ");
 		checkInputValidFormat();
 		inputDateScanner.close();
 	}
@@ -86,7 +86,10 @@ public class UserInputDate {
 			isValidDate = false;
 		} else if ((YYYYMMDD[2] < 01) || (YYYYMMDD[2] > 31)) {
 			isValidDate = false;
-		} 
+		}
+		else if (YYYYMMDD[0] == 1940 && (YYYYMMDD[1] < 05) || (YYYYMMDD[2] < 16)) {
+			isValidDate = false;
+		}
 		return isValidDate;
 	}
 
