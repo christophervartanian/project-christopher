@@ -27,21 +27,22 @@ public class UserInputDate {
 
 	public void promptUserForDate() {
 		System.out.println("Please enter a date between 1940/05/16 and 2026/12/31 with the format YYYYMMDD: ");
-		checkInputValidFormat();
+		while (validInputDate == false) { 
+			String chosenDate = inputDateScanner.nextLine();
+			checkInputValidFormat(chosenDate);
+		}
 		inputDateScanner.close();
 	}
 
-	public void checkInputValidFormat() {
-		while (validInputDate == false) {
-			String chosenDate = inputDateScanner.nextLine();
-			boolean inputIsNumeric = isNumeric(chosenDate);
-			if (chosenDate.length() == 8 && inputIsNumeric) {
-				validInputDate = checkInputInValidDateRange(chosenDate);
-			} else {
-				System.out.println("Please enter a valid date");
-			}
+	public void checkInputValidFormat(String chosenDate) {
+		boolean inputIsNumeric = isNumeric(chosenDate);
+		if (chosenDate.length() == 8 && inputIsNumeric) {
+			validInputDate = checkInputInValidDateRange(chosenDate);
+		} else {
+			System.out.println("Please enter a valid date");
 		}
 	}
+	
 	public boolean isNumeric (String strToCheck) {
 		boolean numeric = false;
 		try {  
@@ -101,13 +102,13 @@ public class UserInputDate {
 		weatherFileScanner.close();
 	}
 
-	private void checkDateInCSV(String line) {
+	public void checkDateInCSV(String line) {
 		if (line.contains(dateWeatherData.getDateString())) {
 			setWeatherData(line);
 		}
 	}
 
-	private void setWeatherData(String line) {
+	public void setWeatherData(String line) {
 		String[] contents = line.split(",");
 		dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
 		dateWeatherData.setRealTemperatures(contents[3], contents[4]);
