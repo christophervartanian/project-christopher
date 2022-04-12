@@ -5,21 +5,25 @@ Our project is meant to be similar to Apple's Weather App. We plan to be able to
 
 #### What user stories were completed this iteration?
 
-In this iteration we spent a long time working with a weather API in Java. We spent a while looking at tutorials but were unable to successfully import APIs, especially after having trouble handling a variety of errors. We decided to switch to using a dataset including historical weather data from Honolulu to play around with because we felt we could still manipulate the data in some interesting ways. We have a temperature CSV set up and a precipitation CSV ready to go. In this iteration the user has the ability to input a date from 1940 to 2026 and our program will return the actual low temperature, actual high temperature, predicted low temperature, and the predicted high temperature.
+In this iteration we focused on correcting mistakes from Iteration 1 and improving functionality. During the iteration we completed:
+* Allowing the user to see year-to-date precipitation for their chosen date
+* Allowing the user to choose any date within the specified range
+* Displaying empty data values from CSV data
 
 #### What user stories do you intend to complete next iteration?
 
-We will potentially use a weather API which will allow for a lot more user stories. Some other things we plan on implementing are:
-* Computing the average temperature over an inputted date range.
-* Showing the actual and predicted precipitation for an inputted date.
-* Computing the total precipitation over an inputted date range.
+For Iteration 3 will be foucsed on the following, some of which we have already begun implementing:
+* Allowing the user to see a 7-day temperature recap
+* Allowing the user to see the average temperature and total precipitation over a 7-day period.
+* Allowing the user to choose between viewing a single date's weather or weather for a 7-day range. 
 * Allowing the user to choose the weather location.
 
 #### Is there anything that you implemented but doesn't currently work?
 
-The API we were trying to implement did not end up working. We still have an XML file in because we will try implementing one more time before the next iteration before departing from the idea entirely. Additionally, we had issues importing the packages for unit tests so we were not able to verify that our unit tests pass. Finally, our system for checking valid input dates is not entirely correct as the user is still allowed to input invalid dates (February 30th for instance) and can input a 8 character long non-numerical string. We plan on fixing these issues in the next Iteration.
+Our DateRange and UserInputDateRange classes are not fully functional as we are saving them for next iteration. However, they should not impact the current functionality of WeatherData. 
 
 #### What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!)
+After cloning and entering the repository on the command line, run the following commands:
 * javac src/WeatherData.java
 * java src/WeatherData
 
