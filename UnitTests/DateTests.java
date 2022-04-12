@@ -26,4 +26,18 @@ public class DateTests {
 		assertTrue("65.0".equals(d.getRealLow()));
 		assertTrue("81.2".equals(d.getRealHigh()));
 	}
+	@Test
+	void testSetPredictedPrecipitation() {
+		Date d = new Date();
+		d.setPredictedPrecipitation("6.7");
+		assertTrue("6.7".equals(d.getPredPrecip()));
+
+	}
+	@Test
+	void testSetRealPrecipitation() {
+		Date d = new Date();
+		d.setRealPrecipitation("2.3");
+		assertTrue("2.3".equals(d.getRealPrecip()));
+
+	}
 }
