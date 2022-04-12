@@ -4,13 +4,15 @@ import java.util.Scanner;
 
 public class UserInputDate {
 	private Date dateWeatherData;
-	private Scanner weatherFileScanner;
+	private Scanner tempFileScanner;
+	private Scanner precipFileScanner;
 	private boolean validInputDate;
 	private Scanner inputDateScanner;
 	
 	public UserInputDate() throws FileNotFoundException {
 		this.dateWeatherData = new Date();
-		this.weatherFileScanner = new Scanner(new File("data/H_Temp.csv"));
+		this.tempFileScanner = new Scanner(new File("data/H_Temp.csv"));
+		this.precipFileScanner = new Scanner(new File("data/H_Precip.csv"));
 		this.validInputDate = false;
 		this.inputDateScanner = new Scanner(System.in);
 	}
@@ -20,9 +22,10 @@ public class UserInputDate {
 	}
 	
 	public void gatherUserInput() {
-		weatherFileScanner.useDelimiter(",");
+		tempFileScanner.useDelimiter(",");
 		promptUserForDate();
-		searchForDateInCSV();
+		searchForDateInTempCSV();
+
 	}
 
 	public void promptUserForDate() {
@@ -94,12 +97,20 @@ public class UserInputDate {
 		return isValidDate;
 	}
 
-	public void searchForDateInCSV() {
-		while (weatherFileScanner.hasNextLine()) {
-			String line = weatherFileScanner.nextLine();
+	public void searchForDateInTempCSV() {
+		while (tempFileScanner.hasNextLine()) {
+			String line = tempFileScanner.nextLine();
 			checkDateInCSV(line);
 		}
-		weatherFileScanner.close();
+		tempFileScanner.close();
+	}
+
+	public void searchForDateInPrecipCSV() {
+		while (precipFileScanner.hasNextLine()) {
+			String line = precipFileScanner.nextLine();
+			checkDateInCSV(line);
+		}
+		precipFileScanner.close();
 	}
 
 	public void checkDateInCSV(String line) {
@@ -121,6 +132,8 @@ public class UserInputDate {
 		System.out.println("Real Temperature High: " + dateWeatherData.getPredHigh());
 		System.out.println("Predicted Temperature Low: " + dateWeatherData.getRealLow());
 		System.out.println("Predicted Temperature High: " + dateWeatherData.getRealHigh());
+		System.out.println("Predicted Precipitation: " + dateWeatherData.getPredPrecip());
+		System.out.println("Real Precipitation: " + dateWeatherData.getRealPrecip());
 	}
 
 }
