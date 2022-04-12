@@ -6,6 +6,7 @@ public class Date {
 	private String predTempHigh;
 	private String realTempLow;
 	private String realTempHigh;
+	private String predPrecip;
 	private String realPrecip;
 	
 
@@ -15,6 +16,8 @@ public class Date {
 		this.predTempHigh = "";
 		this.realTempLow = "";
 		this.realTempHigh = "";
+		this.predPrecip = "";
+		this.realPrecip = "";
 	}
 
 	public void setDateString(String inputDate) {
@@ -27,6 +30,12 @@ public class Date {
 	public void setRealTemperatures (String realLow, String realHigh) {
 		this.realTempLow = realLow;
 		this.realTempHigh = realHigh;
+	}
+	public void setPredictedPrecipitation (String predPrecip) {
+		this.predPrecip = predPrecip;
+	}
+	public void setRealPrecipitation (String realPrecip) {
+		this.realPrecip = realPrecip;
 	}
 
 	public String getDateString() {
@@ -44,5 +53,13 @@ public class Date {
 	}
 	public String getRealHigh() {
 		return this.realTempHigh;
+	}
+	public String getpredPrecip()
+	{
+		return this.predPrecip;
+	}
+	public String getrealPrecip()
+	{
+		return this.realPrecip;
 	}
 }
