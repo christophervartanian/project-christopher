@@ -127,30 +127,4 @@ public class UserInputDateTests {
 		assertTrue("82.7".equals(day.getRealHigh()));
 	}
 	
-	
-	
-	
-	
-//	@Test
-//	void testUserInputDate20200404() throws FileNotFoundException {
-//		UserInputDate userInput = new UserInputDate();
-//		userInput.gatherUserInput();
-//		Date d = userInput.getDateWeatherData();
-//		assertTrue("20200404".equals(d.getDateString()));
-//		assertTrue("69.0".equals(d.getPredLow()));
-//		assertTrue("83.0".equals(d.getPredHigh()));
-//		assertTrue("69.5".equals(d.getRealLow()));
-//		assertTrue("82.4".equals(d.getRealHigh()));
-//	}
-//	@Test
-//	void testUserInputDate19770303() throws FileNotFoundException {
-//		UserInputDate userInput = new UserInputDate();
-//		userInput.gatherUserInput();
-//		Date d = userInput.getDateWeatherData();
-//		assertTrue("19770303".equals(d.getDateString()));
-//		assertTrue("71.0".equals(d.getPredLow()));
-//		assertTrue("86.0".equals(d.getPredHigh()));
-//		assertTrue("67.4".equals(d.getRealLow()));
-//		assertTrue("80.6".equals(d.getRealHigh()));
-//	}
 }
