@@ -115,14 +115,21 @@ public class UserInputDate {
 
 	public void checkDateInCSV(String line) {
 		if (line.contains(dateWeatherData.getDateString())) {
-			setWeatherData(line);
+			setTempData(line);
 		}
 	}
 
-	public void setWeatherData(String line) {
+	public void setTempData(String line) {
 		String[] contents = line.split(",");
 		dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
 		dateWeatherData.setRealTemperatures(contents[3], contents[4]);
+		searchForDateInPrecipCSV();
+	}
+
+	public void setPrecipData(String line) {
+		String[] contents = line.split(",");
+		dateWeatherData.setPredictedPrecipitation(contents[1]);
+		dateWeatherData.setRealPrecipitation(contents[2]);
 		printDateWeatherData();
 	}
 
