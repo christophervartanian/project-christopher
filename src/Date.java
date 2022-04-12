@@ -54,11 +54,11 @@ public class Date {
 	public String getRealHigh() {
 		return this.realTempHigh;
 	}
-	public String getpredPrecip()
+	public String getPredPrecip()
 	{
 		return this.predPrecip;
 	}
-	public String getrealPrecip()
+	public String getRealPrecip()
 	{
 		return this.realPrecip;
 	}
