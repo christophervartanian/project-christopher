@@ -106,7 +106,7 @@ public class UserInputDateTests {
 		assertTrue(dateRangeValid);
 	}
 	@Test
-	void testCheckDateInCSV() {
+	void testCheckDateInCSVForTemp() {
 		String line = "19430513,69.0,83.0,71.2,84.6";
 		Date day = inputDate.getDateWeatherData();
 		day.setDateString("19430513");
@@ -117,7 +117,7 @@ public class UserInputDateTests {
 		assertTrue("84.6".equals(day.getRealHigh()));
 	}
 	@Test
-	void testSetWeatherData() {
+	void testSetTempData() {
 		String line = "19840408,72.0,84.0,69.8,82.7";
 		inputDate.setTempData(line);
 		Date day = inputDate.getDateWeatherData();
@@ -125,6 +125,23 @@ public class UserInputDateTests {
 		assertTrue("84.0".equals(day.getPredHigh()));
 		assertTrue("69.8".equals(day.getRealLow()));
 		assertTrue("82.7".equals(day.getRealHigh()));
+	}
+	@Test
+	void testCheckDateInCSVForPrecip() {
+		String line = "19430513,18.06,7.26";
+		Date day = inputDate.getDateWeatherData();
+		day.setDateString("19430513");
+		inputDate.checkDateInCSVForPrecip(line);
+		assertTrue("18.06".equals(day.getPredPrecip()));
+		assertTrue("7.26".equals(day.getRealPrecip()));
+	}
+	@Test
+	void testSetPrecipData() {
+		String line = "19840408,1.98,6.45";
+		inputDate.setPrecipData(line);
+		Date day = inputDate.getDateWeatherData();
+		assertTrue("1.98".equals(day.getPredPrecip()));
+		assertTrue("6.45".equals(day.getRealPrecip()));
 	}
 	
 }

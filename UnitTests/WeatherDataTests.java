@@ -24,6 +24,8 @@ public class WeatherDataTests {
 		assertTrue("83.0".equals(day.getPredHigh()));
 		assertTrue("69.5".equals(day.getRealLow()));
 		assertTrue("82.4".equals(day.getRealHigh()));
+		assertTrue("5.78".equals(day.getPredPrecip()));
+		assertTrue("6.31".equals(day.getRealPrecip()));
 	}
 
 }

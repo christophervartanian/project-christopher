@@ -144,12 +144,12 @@ public class UserInputDate {
 
 	public void printDateWeatherData() {
 		System.out.println("Date: " + dateWeatherData.getDateString());
-		System.out.println("Real Temperature Low: " + dateWeatherData.getPredLow());
-		System.out.println("Real Temperature High: " + dateWeatherData.getPredHigh());
-		System.out.println("Predicted Temperature Low: " + dateWeatherData.getRealLow());
-		System.out.println("Predicted Temperature High: " + dateWeatherData.getRealHigh());
-		System.out.println("Predicted Precipitation: " + dateWeatherData.getPredPrecip());
-		System.out.println("Real Precipitation: " + dateWeatherData.getRealPrecip());
+		System.out.println("Predicted Temperature Low: " + dateWeatherData.getPredLow());
+		System.out.println("Predicted Temperature High: " + dateWeatherData.getPredHigh());
+		System.out.println("Real Temperature Low: " + dateWeatherData.getRealLow());
+		System.out.println("Real Temperature High: " + dateWeatherData.getRealHigh());
+		System.out.println("Predicted Year-to-Date Precipitation: " + dateWeatherData.getPredPrecip());
+		System.out.println("Real Year-to-Date Precipitation: " + dateWeatherData.getRealPrecip());
 	}
 
 }
