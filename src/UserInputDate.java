@@ -23,6 +23,7 @@ public class UserInputDate {
 	
 	public void gatherUserInput() {
 		tempFileScanner.useDelimiter(",");
+		precipFileScanner.useDelimiter(",");
 		promptUserForDate();
 		searchForDateInTempCSV();
 
@@ -100,30 +101,38 @@ public class UserInputDate {
 	public void searchForDateInTempCSV() {
 		while (tempFileScanner.hasNextLine()) {
 			String line = tempFileScanner.nextLine();
-			checkDateInCSV(line);
+			checkDateInCSVForTemp(line);
 		}
 		tempFileScanner.close();
 	}
 
-	public void searchForDateInPrecipCSV() {
-		while (precipFileScanner.hasNextLine()) {
-			String line = precipFileScanner.nextLine();
-			checkDateInCSV(line);
-		}
-		precipFileScanner.close();
-	}
 
-	public void checkDateInCSV(String line) {
+	public void checkDateInCSVForTemp(String line) {
 		if (line.contains(dateWeatherData.getDateString())) {
 			setTempData(line);
 		}
 	}
+	
 
 	public void setTempData(String line) {
 		String[] contents = line.split(",");
 		dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
 		dateWeatherData.setRealTemperatures(contents[3], contents[4]);
 		searchForDateInPrecipCSV();
+	}
+	
+	public void searchForDateInPrecipCSV() {
+		while (precipFileScanner.hasNextLine()) {
+			String line = precipFileScanner.nextLine();
+			checkDateInCSVForPrecip(line);
+		}
+		precipFileScanner.close();
+	}
+	
+	public void checkDateInCSVForPrecip(String line) {
+		if (line.contains(dateWeatherData.getDateString())) {
+			setPrecipData(line);
+		}
 	}
 
 	public void setPrecipData(String line) {

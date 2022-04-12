@@ -110,7 +110,7 @@ public class UserInputDateTests {
 		String line = "19430513,69.0,83.0,71.2,84.6";
 		Date day = inputDate.getDateWeatherData();
 		day.setDateString("19430513");
-		inputDate.checkDateInCSV(line);
+		inputDate.checkDateInCSVForTemp(line);
 		assertTrue("69.0".equals(day.getPredLow()));
 		assertTrue("83.0".equals(day.getPredHigh()));
 		assertTrue("71.2".equals(day.getRealLow()));
@@ -119,7 +119,7 @@ public class UserInputDateTests {
 	@Test
 	void testSetWeatherData() {
 		String line = "19840408,72.0,84.0,69.8,82.7";
-		inputDate.setWeatherData(line);
+		inputDate.setTempData(line);
 		Date day = inputDate.getDateWeatherData();
 		assertTrue("72.0".equals(day.getPredLow()));
 		assertTrue("84.0".equals(day.getPredHigh()));
