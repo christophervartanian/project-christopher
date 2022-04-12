@@ -3,6 +3,7 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
+//implementation not complete
 public class DateRange {
 	private List<Date> dates;
 	private Double avgLowPredTemp;
