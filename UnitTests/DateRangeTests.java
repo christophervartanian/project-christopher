@@ -32,7 +32,6 @@ public class DateRangeTests {
 		assertEquals(56.0,dr.getAvgLowRealTemp());
 		assertEquals(77.0,dr.getAvgHighRealTemp());
 	}
-	
 	@Test
 	void testComputeTotalPrecips() {
 		Date day = new Date();
