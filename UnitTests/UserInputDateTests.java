@@ -57,53 +57,42 @@ public class UserInputDateTests {
 		boolean isNumeric = inputDate.isNumeric("19990404");
 		assertTrue(isNumeric);
 	}
+
 	@Test
-	void testInputInValidDateRangeTrue() {
-		boolean isInValidDateRange = inputDate.checkInputInValidDateRange("19400516");
-		assertTrue(isInValidDateRange);
-	}
-	@Test
-	void testConvertDateStringtoYYYYMMDD() {
-		int[] YYYYMMDD = inputDate.convertDateStringToYYYYMMDD("20010715");
-		assertEquals(2001,YYYYMMDD[0]);
-		assertEquals(07,YYYYMMDD[1]);
-		assertEquals(15,YYYYMMDD[2]);
-	}
-	@Test
-	void testCheckValidDateRangeInvalidYear() {
-		int[] testDate = new int[3];
-		testDate[0]= 1903;
-		testDate[1] = 12;
-		testDate[2] = 29;
-		boolean dateRangeValid = inputDate.checkValidDateRange(testDate);
+	void testCheckInputInValidDateRangeInvalidYear() throws FileNotFoundException {
+		String testDate = "19031229";
+		boolean dateRangeValid = inputDate.checkInputInValidDateRange(testDate);
 		assertFalse(dateRangeValid);
 	}
 	@Test
-	void testCheckValidDateRangeInvalidMonth() {
-		int[] testDate = new int[3];
-		testDate[0]= 1977;
-		testDate[1] = 14;
-		testDate[2] = 13;
-		boolean dateRangeValid = inputDate.checkValidDateRange(testDate);
+	void testCheckInputInValidDateRangeInvalidMonth() throws FileNotFoundException {
+		String testDate = "19771413";
+		boolean dateRangeValid = inputDate.checkInputInValidDateRange(testDate);
 		assertFalse(dateRangeValid);
 	}
 	@Test
-	void testCheckValidDateRangeInvalidDay() {
-		int[] testDate = new int[3];
-		testDate[0]= 1987;
-		testDate[1] = 02;
-		testDate[2] = 29;
-		boolean dateRangeValid = inputDate.checkValidDateRange(testDate);
+	void testCheckInputInValidDateRangeInvalidDay() throws FileNotFoundException {
+		String testDate = "19870229";
+		boolean dateRangeValid = inputDate.checkInputInValidDateRange(testDate);
 		assertFalse(dateRangeValid);
 	}
 	@Test
-	void testCheckValidDateRangeValidDate() {
-		int[] testDate = new int[3];
-		testDate[0]= 1987;
-		testDate[1] = 02;
-		testDate[2] = 05;
-		boolean dateRangeValid = inputDate.checkValidDateRange(testDate);
+	void testCheckInputInValidDateRangeValidDate() throws FileNotFoundException {
+		String testDate = "19870205";
+		boolean dateRangeValid = inputDate.checkInputInValidDateRange(testDate);
 		assertTrue(dateRangeValid);
+	}
+	@Test
+	void testCheckInputInCSVTrue() throws FileNotFoundException {
+		String testDate = "20000229";
+		boolean inCSV = inputDate.checkInputInCSV(testDate);
+		assertTrue(inCSV);
+	}
+	@Test
+	void testCheckInputInCSVFalse() throws FileNotFoundException {
+		String testDate = "19400515";
+		boolean inCSV = inputDate.checkInputInCSV(testDate);
+		assertFalse(inCSV);
 	}
 	@Test
 	void testCheckDateInCSVForTemp() {
@@ -142,6 +131,18 @@ public class UserInputDateTests {
 		Date day = inputDate.getDateWeatherData();
 		assertTrue("1.98".equals(day.getPredPrecip()));
 		assertTrue("6.45".equals(day.getRealPrecip()));
+	}
+	@Test
+	void testCheckEmptyDateEmpty() {
+		String emptyData = "";
+		emptyData = inputDate.checkEmptyData(emptyData);
+		assertTrue("N/A".equals(emptyData));
+	}
+	@Test
+	void testCheckEmptyDateNotEmpty() {
+		String notEmptyData = "17.3";
+		notEmptyData = inputDate.checkEmptyData(notEmptyData);
+		assertTrue("17.3".equals(notEmptyData));
 	}
 	
 }

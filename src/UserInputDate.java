@@ -62,7 +62,7 @@ public class UserInputDate {
 	}
 	
 	public boolean checkInputInValidDateRange(String chosenDate) throws FileNotFoundException {
-		inputInRange = setupCSVSearch(chosenDate);
+		inputInRange = checkInputInCSV(chosenDate);
 		if (inputInRange) {
 			validInputDate = true;
 			dateWeatherData.setDateString(chosenDate);
@@ -74,7 +74,7 @@ public class UserInputDate {
 		return inputInRange;
 	}
 
-	public boolean setupCSVSearch(String chosenDate) throws FileNotFoundException {
+	public boolean checkInputInCSV(String chosenDate) throws FileNotFoundException {
 		Scanner tempFileScannerForValidation = new Scanner(new File("data/H_Temp.csv"));
 		while (tempFileScannerForValidation.hasNextLine()) {
 			String line = tempFileScannerForValidation.nextLine();
@@ -129,7 +129,7 @@ public class UserInputDate {
 		printDateWeatherData();
 	}
 
-	private String checkEmptyData(String data) {
+	public String checkEmptyData(String data) {
 		if (data.equals(" ") || data.equals("")) {
 			return "N/A";
 		}
