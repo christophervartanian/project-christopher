@@ -1,6 +1,5 @@
 package src;
 
-import src.UserInputDate;
 import java.io.FileNotFoundException;
 
 public class WeatherData {
