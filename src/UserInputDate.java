@@ -11,6 +11,22 @@ public class UserInputDate {
 	private boolean validInputDate;
 	private Scanner inputDateScanner;
 	private boolean inputInRange;
+	private String startDate;
+	private String endDate;
+	private double highPredictedTempSum;
+	private double lowPredictedTempSum;
+	private double highActualTempSum;
+	private double lowActualTempSum;
+	private double actualPrecipSum;
+	private double predictedPrecipSum;
+	private double daysInRange;
+	private double predictedPrecipitation;
+	private double highPredictedTempAvg;
+	private double lowPredictedTempAvg;
+	private double lowActualTempAvg;
+	private double highActualTempAvg;
+	private double actualPrecipAvg;
+	private double predictedPrecipAvg;
 	
 	public UserInputDate() throws FileNotFoundException {
 		this.dateWeatherData = new Date();
@@ -19,6 +35,22 @@ public class UserInputDate {
 		this.validInputDate = false;
 		this.inputDateScanner = new Scanner(System.in);
 		this.inputInRange = false;
+		this.startDate = "";
+		this.endDate = "";
+		this.highPredictedTempSum = 0;
+		this.lowPredictedTempSum = 0;
+		this.lowActualTempSum = 0;
+		this.highActualTempSum = 0;
+		this.actualPrecipSum = 0;
+		this.predictedPrecipSum = 0;
+		this.daysInRange = 0;
+		this.predictedPrecipitation = 0;
+		this.highPredictedTempAvg = 0;
+		this.lowPredictedTempAvg = 0;
+		this.lowActualTempAvg = 0;
+		this.highActualTempAvg = 0;
+		this.actualPrecipAvg = 0;
+		this.predictedPrecipAvg = 0;
 	}
 	
 	public Date getDateWeatherData() {
@@ -29,24 +61,38 @@ public class UserInputDate {
 		tempFileScanner.useDelimiter(",");
 		precipFileScanner.useDelimiter(",");
 		promptUserForDate();
-		searchForDateInTempCSV();
+		checkDateInCSVForPrecip(startDate);
+		checkDateInCSVForPrecip(endDate);
 	}
+	
 
 	public void promptUserForDate() throws FileNotFoundException {
-		System.out.println("Please enter a date between 1940/05/16 and 2026/12/31 with the format YYYYMMDD: ");
+		System.out.println("Please enter a date range between 1940/05/16 and 2026/12/31 with the format YYYYMMDD-YYYYMMDD: ");
 		while (validInputDate == false) { 
 			String chosenDate = inputDateScanner.nextLine();
-			checkInputValidFormat(chosenDate);
+			String [] chosenRange = chosenDate.split("-");
+			startDate = chosenRange[0];
+			endDate = chosenRange[1];
+			
+			boolean validFirst = checkInputValidFormat(chosenRange[0]);
+			boolean validSecond = checkInputValidFormat(chosenRange[1]);
+			if (validFirst && validSecond) {
+				this.validInputDate = true;
+				this.dateWeatherData.setDateString(chosenDate);
+			}
 		}
+		
 		inputDateScanner.close();
 	}
 
-	public void checkInputValidFormat(String chosenDate) throws FileNotFoundException {
+	public boolean checkInputValidFormat(String chosenDate) throws FileNotFoundException {
 		boolean inputIsNumeric = isNumeric(chosenDate);
 		if (chosenDate.length() == 8 && inputIsNumeric) {
-			checkInputInValidDateRange(chosenDate);
+			return checkInputInValidDateRange(chosenDate);
+			
 		} else {
 			System.out.println("Please enter a valid date");
+			return false;
 		}
 	}
 	
@@ -63,16 +109,10 @@ public class UserInputDate {
 	
 	public boolean checkInputInValidDateRange(String chosenDate) throws FileNotFoundException {
 		inputInRange = checkInputInCSV(chosenDate);
-		if (inputInRange) {
-			validInputDate = true;
-			dateWeatherData.setDateString(chosenDate);
-			
-		}
-		else {
-			System.out.println("Please enter a valid date");
-		}
+		
+		
 		return inputInRange;
-	}
+}
 
 	public boolean checkInputInCSV(String chosenDate) throws FileNotFoundException {
 		Scanner tempFileScannerForValidation = new Scanner(new File("data/H_Temp.csv"));
@@ -84,33 +124,77 @@ public class UserInputDate {
 		}
 		return inputInRange;
 	}
+	
+	public void setTempAndPrecipData(String line) {
+		String[] contents = line.split(",");
+		lowPredictedTempSum = Double.parseDouble(contents[1]) + lowPredictedTempSum;
+		highPredictedTempSum = Double.parseDouble(contents[2]) + highPredictedTempSum;
+		lowActualTempSum = Double.parseDouble(contents[3]) + lowActualTempSum;
+		highActualTempSum = Double.parseDouble(contents[4]) + highActualTempSum;
+		actualPrecipSum = Double.parseDouble(contents[6]) + actualPrecipSum;
+		predictedPrecipSum = Double.parseDouble(contents[5]) + predictedPrecipSum;
+		daysInRange += 1;
+	}
 
-	public void searchForDateInTempCSV() {
-		while (tempFileScanner.hasNextLine()) {
-			String line = tempFileScanner.nextLine();
-			checkDateInCSVForTemp(line);
+	public void searchInCSVAndSetValues() {
+		boolean isStartDate = false;
+		String line = "";
+		while (tempFileScanner.hasNextLine() && !isStartDate) {
+			
+			line = tempFileScanner.nextLine();
+			System.out.println(line);
+			isStartDate = checkStartDateInCSV(line);
 		}
+		System.out.println("hello");
+		boolean isEndDate = false;
+		while(tempFileScanner.hasNextLine() && !isEndDate) {
+			line = tempFileScanner.nextLine();
+			setTempAndPrecipData(line);
+			System.out.println(line);
+			isEndDate = checkEndDateInCSV(line);
+			
+		}
+		
 		tempFileScanner.close();
+		this.lowPredictedTempAvg = lowPredictedTempSum / daysInRange;
+		this.highPredictedTempAvg = highPredictedTempSum / daysInRange;
+		this.lowActualTempAvg = lowActualTempSum / daysInRange;
+		this.highActualTempAvg = highActualTempSum / daysInRange;
+		this.actualPrecipAvg = actualPrecipSum / daysInRange;
+		this.predictedPrecipAvg = (predictedPrecipSum/daysInRange);
 	}
 
 
-	public void checkDateInCSVForTemp(String line) {
-		if (line.contains(dateWeatherData.getDateString())) {
-			setTempData(line);
+	public boolean checkStartDateInCSV(String line) {
+		if (line.contains(this.startDate)) {
+			
+			return true;
+	//		setTempData(line);
 		}
+		return false;
+	}
+	public boolean checkEndDateInCSV(String line) {
+		if (line.contains(this.endDate)) {
+			
+			return true;
+	//		setTempData(line);
+		}
+		return false;
 	}
 	
 
 	public void setTempData(String line) {
 		String[] contents = line.split(",");
-		dateWeatherData.setPredictedTemperatures(contents[1], contents[2]);
-		dateWeatherData.setRealTemperatures(contents[3], contents[4]);
-		searchForDateInPrecipCSV();
+		lowPredictedTempSum = Integer.parseInt(contents[1]) + lowPredictedTempSum;
+		highPredictedTempSum = Integer.parseInt(contents[2]) + highPredictedTempSum;
+		lowActualTempSum = Integer.parseInt(contents[3]) + lowActualTempSum;
+		highActualTempSum = Integer.parseInt(contents[4]) + highActualTempSum;
+		
 	}
 	
 	public void searchForDateInPrecipCSV() {
-		while (precipFileScanner.hasNextLine()) {
-			String line = precipFileScanner.nextLine();
+		while (tempFileScanner.hasNextLine()) {
+			String line = tempFileScanner.nextLine();
 			checkDateInCSVForPrecip(line);
 		}
 		precipFileScanner.close();
@@ -137,15 +221,17 @@ public class UserInputDate {
 			return data;
 		}
 	}
+	
+	
 
 	public void printDateWeatherData() {
 		System.out.println("Date: " + checkEmptyData(dateWeatherData.getDateString()));
-		System.out.println("Predicted Temperature Low: " + checkEmptyData(dateWeatherData.getPredLow()));
-		System.out.println("Predicted Temperature High: " + checkEmptyData(dateWeatherData.getPredHigh()));
-		System.out.println("Real Temperature Low: " + checkEmptyData(dateWeatherData.getRealLow()));
-		System.out.println("Real Temperature High: " + checkEmptyData(dateWeatherData.getRealHigh()));
-		System.out.println("Predicted Year-to-Date Precipitation: " + checkEmptyData(dateWeatherData.getPredPrecip()));
-		System.out.println("Real Year-to-Date Precipitation: " + checkEmptyData(dateWeatherData.getRealPrecip()));
+		System.out.println("Predicted Temperature Range Low: " + this.lowPredictedTempAvg);
+		System.out.println("Predicted Temperature Range High: " + this.highPredictedTempAvg);
+		System.out.println("Real Temperature Range Low: " + this.lowActualTempAvg);
+		System.out.println("Real Temperature Range High: " + this.highActualTempAvg);
+		System.out.println("Predicted Precipitation Average: " + this.predictedPrecipAvg);
+		System.out.println("Real Precipitation Average: " + this.actualPrecipSum/daysInRange);
 	}
 }
 
