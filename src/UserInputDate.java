@@ -226,4 +226,41 @@ public class UserInputDate {
 		System.out.println("Predicted Precipitation Average: " + this.predictedPrecipAvg);
 		System.out.println("Real Precipitation Average: " + this.actualPrecipAvg);
 	}
-}
+
+	public void precipBreakdown() {
+		
+		if (this.actualPrecipAvg < 2.5) {
+			System.out.println("This period exprienced LIGHT rain");
+		}
+		if (this.actualPrecipAvg < 7.6 && this.actualPrecipAvg > 2.5) {
+			System.out.println("This period exprienced MODERATE rain");
+
+		}
+		if (this.actualPrecipAvg > 7.6) {
+			System.out.println("This period exprienced HEAVY rain");
+
+		}
+	}
+
+	public void tempBreakdown() {
+		
+		if (this.highActualTempAvg < 50) {
+			System.out.println("This period was VERY COLD");	
+		}
+		if (this.highActualTempAvg < 60) {
+			System.out.println("This period was COLD"); 
+		}
+		if (this.lowActualTempAvg > 80) {
+			System.out.println("This period was HOT");
+		}
+		if (this.lowActualTempAvg > 85) {
+			System.out.println("This period was VERY HOT");
+		}
+		else {
+			System.out.println("This period was MODERATE in temperature");
+		}
+
+		}
+
+	}
+
