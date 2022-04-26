@@ -5,14 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class UserInputDate {
-	private Date dateWeatherData;
 	private Scanner tempFileScanner;
-	private Scanner precipFileScanner;
 	private boolean validInputDate;
 	private Scanner inputDateScanner;
 	private boolean inputInRange;
-	private String startDate;
-	private String endDate;
+	public String startDate;
+	public String endDate;
 	private double highPredictedTempSum;
 	private double lowPredictedTempSum;
 	private double highActualTempSum;
@@ -20,17 +18,15 @@ public class UserInputDate {
 	private double actualPrecipSum;
 	private double predictedPrecipSum;
 	private double daysInRange;
-	private double highPredictedTempAvg;
-	private double lowPredictedTempAvg;
-	private double lowActualTempAvg;
-	private double highActualTempAvg;
-	private double actualPrecipAvg;
-	private double predictedPrecipAvg;
+	public double highPredictedTempAvg;
+	public double lowPredictedTempAvg;
+	public double lowActualTempAvg;
+	public double highActualTempAvg;
+	public double actualPrecipAvg;
+	public double predictedPrecipAvg;
 
 	public UserInputDate() throws FileNotFoundException {
-		this.dateWeatherData = new Date();
 		this.tempFileScanner = new Scanner(new File("data/H_Temp.csv"));
-		this.precipFileScanner = new Scanner(new File("data/H_Precip.csv"));
 		this.validInputDate = false;
 		this.inputDateScanner = new Scanner(System.in);
 		this.inputInRange = false;
@@ -51,16 +47,9 @@ public class UserInputDate {
 		this.predictedPrecipAvg = 0;
 	}
 
-	public Date getDateWeatherData() {
-		return this.dateWeatherData;
-	}
-
 	public void gatherUserInput() throws FileNotFoundException {
 		tempFileScanner.useDelimiter(",");
-		precipFileScanner.useDelimiter(",");
 		promptUserForDate();
-		checkDateInCSVForPrecip(startDate);
-		checkDateInCSVForPrecip(endDate);
 	}
 
 	public void promptUserForDate() throws FileNotFoundException {
@@ -76,7 +65,6 @@ public class UserInputDate {
 			boolean validSecond = checkInputValidFormat(chosenRange[1]);
 			if (validFirst && validSecond) {
 				this.validInputDate = true;
-				this.dateWeatherData.setDateString(chosenDate);
 			}
 		}
 
@@ -158,7 +146,7 @@ public class UserInputDate {
 		this.lowActualTempAvg = lowActualTempSum / daysInRange;
 		this.highActualTempAvg = highActualTempSum / daysInRange;
 		this.actualPrecipAvg = actualPrecipSum / daysInRange;
-		this.predictedPrecipAvg = (predictedPrecipSum / daysInRange);
+		this.predictedPrecipAvg = predictedPrecipSum / daysInRange;
 	}
 
 	public boolean checkStartDateInCSV(String line) {
@@ -188,37 +176,8 @@ public class UserInputDate {
 
 	}
 
-	public void searchForDateInPrecipCSV() {
-		while (tempFileScanner.hasNextLine()) {
-			String line = tempFileScanner.nextLine();
-			checkDateInCSVForPrecip(line);
-		}
-		precipFileScanner.close();
-	}
-
-	public void checkDateInCSVForPrecip(String line) {
-		if (line.contains(dateWeatherData.getDateString())) {
-			setPrecipData(line);
-		}
-	}
-
-	public void setPrecipData(String line) {
-		String[] contents = line.split(",");
-		dateWeatherData.setPredictedPrecipitation(contents[1]);
-		dateWeatherData.setRealPrecipitation(contents[2]);
-		printDateWeatherData();
-	}
-
-	public String checkEmptyData(String data) {
-		if (data.equals(" ") || data.equals("")) {
-			return "N/A";
-		} else {
-			return data;
-		}
-	}
-
 	public void printDateWeatherData() {
-		System.out.println("Date: " + checkEmptyData(dateWeatherData.getDateString()));
+		System.out.println("Date: " + startDate + " - " + endDate);
 		System.out.println("Predicted Temperature Range Low: " + this.lowPredictedTempAvg);
 		System.out.println("Predicted Temperature Range High: " + this.highPredictedTempAvg);
 		System.out.println("Real Temperature Range Low: " + this.lowActualTempAvg);
@@ -228,7 +187,7 @@ public class UserInputDate {
 	}
 
 	public void precipBreakdown() {
-		
+
 		if (this.actualPrecipAvg < 2.5) {
 			System.out.println("This period exprienced LIGHT rain");
 		}
@@ -243,24 +202,22 @@ public class UserInputDate {
 	}
 
 	public void tempBreakdown() {
-		
+
 		if (this.highActualTempAvg < 50) {
-			System.out.println("This period was VERY COLD");	
+			System.out.println("This period was VERY COLD");
 		}
 		if (this.highActualTempAvg < 60) {
-			System.out.println("This period was COLD"); 
+			System.out.println("This period was COLD");
 		}
 		if (this.lowActualTempAvg > 80) {
 			System.out.println("This period was HOT");
 		}
 		if (this.lowActualTempAvg > 85) {
 			System.out.println("This period was VERY HOT");
-		}
-		else {
+		} else {
 			System.out.println("This period was MODERATE in temperature");
-		}
-
 		}
 
 	}
 
+}
