@@ -8,6 +8,7 @@ My project is meant to be similar to Apple's Weather App. We plan to be able to 
 In this iteration I am focused on improving functionality. I completed:
 * Allowing the user to see a summary of the temperature and precipitation averages for any range of dates
 * Allowed the user to see a breakdown of the description of the weather for their chosen range (i.e. Hot, Cold, Light Rain, Heavy Rain)
+* Added multiple locations (Dallas, Honolulu, Miami), so user could choose which weather to view
 
 
 
@@ -16,3 +17,5 @@ After cloning and entering the repository on the command line, run the following
 * ./RunTemp.sh
 
 
+#### Is there anything that you implemented but doesn't currently work?
+Dallas and Miami are copied data from Honolulu but the range used for tests are all different numbers changed manually in order to ensure a working program.
