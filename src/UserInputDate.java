@@ -234,10 +234,10 @@ public class UserInputDate {
 		if (this.highActualTempAvg < 50) {
 			System.out.println("This period was VERY COLD");
 		}
-		if (this.highActualTempAvg < 60) {
+		if (this.highActualTempAvg < 60 && this.highActualTempAvg >= 50) {
 			System.out.println("This period was COLD");
 		}
-		if (this.lowActualTempAvg > 80) {
+		if (this.lowActualTempAvg > 80 && this.lowActualTempAvg <= 85) {
 			System.out.println("This period was HOT");
 		}
 		if (this.lowActualTempAvg > 85) {
