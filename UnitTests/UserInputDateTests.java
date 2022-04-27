@@ -1,7 +1,9 @@
 package UnitTests;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,10 @@ public class UserInputDateTests {
 	@BeforeEach 
 	void setup() throws FileNotFoundException {
 		inputDate = new UserInputDate();
+		inputDate.location = "Dallas";
+		inputDate.startDate = "19480509";
+		inputDate.endDate = "19480510";
+		
 	}
 	
 	//*** For CheckInputValidFormat Tests ***
@@ -95,18 +101,42 @@ public class UserInputDateTests {
 		assertFalse(inCSV);
 	}
 	@Test
-	void testCheckRange() throws FileNotFoundException {
-		inputDate.startDate = "20200505";
-		inputDate.endDate = "20200510";
+	void testHonoluluLocation() throws FileNotFoundException {
+		inputDate.tempFileScanner = new Scanner(new File("data/Honolulu Temp and Precip.csv")) ;
+		inputDate.location = "Honolulu";
 		inputDate.searchInCSVAndSetValues();
-		assertEquals(inputDate.highPredictedTempAvg, 84.8);
-		assertEquals(inputDate.lowPredictedTempAvg, 70.0);
-		assertEquals(inputDate.lowActualTempAvg, 70.92);
-		assertEquals(inputDate.highActualTempAvg, 84.28);
-		assertEquals(inputDate.predictedPrecipAvg, 8.338);
-		assertEquals(inputDate.actualPrecipAvg, 7.118);
+		assertEquals(inputDate.highPredictedTempAvg, 82.0);
+		assertEquals(inputDate.lowPredictedTempAvg, 71.0);
+		assertEquals(inputDate.lowActualTempAvg, 71.0);
+		assertEquals(inputDate.highActualTempAvg, 84.4);
+		assertEquals(inputDate.predictedPrecipAvg, 12.13);
+		assertEquals(inputDate.actualPrecipAvg, 7.17);
+	}
+	@Test
+	void testDallasLocation() throws FileNotFoundException{
+		inputDate.tempFileScanner = new Scanner(new File("data/Dallas Temp and Precip.csv"));
+		inputDate.location = "Dallas";
+		inputDate.searchInCSVAndSetValues();
+		assertEquals(inputDate.highPredictedTempAvg, 84.0);
+		assertEquals(inputDate.lowPredictedTempAvg, 72.0);
+		assertEquals(inputDate.lowActualTempAvg, 89.0);
+		assertEquals(inputDate.highActualTempAvg, 83.0);
+		assertEquals(inputDate.predictedPrecipAvg, 9.0);
+		assertEquals(inputDate.actualPrecipAvg, 8.0);
 		
-		
+	}
+
+	@Test
+	void testMiamiLocation() throws FileNotFoundException{
+		inputDate.tempFileScanner = new Scanner(new File("data/Miami Temp and Precip.csv"));
+		inputDate.location = "Miami";
+		inputDate.searchInCSVAndSetValues();
+		assertEquals(inputDate.highPredictedTempAvg, 88.0);
+		assertEquals(inputDate.lowPredictedTempAvg, 75.0);
+		assertEquals(inputDate.lowActualTempAvg, 72.0);
+		assertEquals(inputDate.highActualTempAvg, 81.0);
+		assertEquals(inputDate.predictedPrecipAvg, 11.0);
+		assertEquals(inputDate.actualPrecipAvg, 6.0);
 		
 	}
 		

@@ -1,11 +1,15 @@
 package src;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class UserInputDate {
-	private Scanner tempFileScanner;
+	public Scanner tempFileScanner;
 	private boolean validInputDate;
 	private Scanner inputDateScanner;
 	private boolean inputInRange;
@@ -24,9 +28,11 @@ public class UserInputDate {
 	public double highActualTempAvg;
 	public double actualPrecipAvg;
 	public double predictedPrecipAvg;
+	public String location;
+	
+	private Set <String> locations = new HashSet <String> (Arrays.asList("Miami", "Dallas", "Honolulu"));
 
 	public UserInputDate() throws FileNotFoundException {
-		this.tempFileScanner = new Scanner(new File("data/H_Temp.csv"));
 		this.validInputDate = false;
 		this.inputDateScanner = new Scanner(System.in);
 		this.inputInRange = false;
@@ -45,10 +51,12 @@ public class UserInputDate {
 		this.highActualTempAvg = 0;
 		this.actualPrecipAvg = 0;
 		this.predictedPrecipAvg = 0;
+		this.location = "";
 	}
 
 	public void gatherUserInput() throws FileNotFoundException {
-		tempFileScanner.useDelimiter(",");
+		
+		promptUserForLocation();
 		promptUserForDate();
 	}
 
@@ -64,6 +72,7 @@ public class UserInputDate {
 				System.out.println("Start date chosen is after the end date. Try again");
 				continue;
 			}
+			
 
 			boolean validFirst = checkInputValidFormat(chosenRange[0]);
 			boolean validSecond = checkInputValidFormat(chosenRange[1]);
@@ -74,6 +83,20 @@ public class UserInputDate {
 
 		inputDateScanner.close();
 	}
+	
+	public void promptUserForLocation() throws FileNotFoundException {
+		System.out.println("Please choose between Miami, Honolulu, or Dallas");
+		String userInputNext = inputDateScanner.nextLine();
+		while (!locations.contains(userInputNext)){
+			System.out.println("Try again. Pick a valid location");
+			userInputNext = inputDateScanner.nextLine();
+	
+			}
+		this.location = userInputNext;
+		this.tempFileScanner = new Scanner(new File("data/" + userInputNext + " Temp and Precip.csv")) ;
+		tempFileScanner.useDelimiter(",");
+		}
+	
 
 	public boolean checkInputValidFormat(String chosenDate) throws FileNotFoundException {
 		boolean inputIsNumeric = isNumeric(chosenDate);
@@ -104,13 +127,14 @@ public class UserInputDate {
 	}
 
 	public boolean checkInputInCSV(String chosenDate) throws FileNotFoundException {
-		Scanner tempFileScannerForValidation = new Scanner(new File("data/H_Temp.csv"));
+		Scanner tempFileScannerForValidation = new Scanner(new File("data/" + this.location + " Temp and Precip.csv"));
 		while (tempFileScannerForValidation.hasNextLine()) {
 			String line = tempFileScannerForValidation.nextLine();
 			if (line.contains(chosenDate)) {
 				this.inputInRange = true;
 			}
 		}
+		tempFileScannerForValidation.close();
 		return inputInRange;
 	}
 
@@ -157,7 +181,7 @@ public class UserInputDate {
 		if (line.contains(this.startDate)) {
 
 			return true;
-			// setTempData(line);
+	
 		}
 		return false;
 	}
@@ -166,7 +190,7 @@ public class UserInputDate {
 		if (line.contains(this.endDate)) {
 
 			return true;
-			// setTempData(line);
+			
 		}
 		return false;
 	}
