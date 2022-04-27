@@ -60,6 +60,10 @@ public class UserInputDate {
 			String[] chosenRange = chosenDate.split("-");
 			startDate = chosenRange[0];
 			endDate = chosenRange[1];
+			if (startDate.compareTo(endDate) > 0) {
+				System.out.println("Start date chosen is after the end date. Try again");
+				continue;
+			}
 
 			boolean validFirst = checkInputValidFormat(chosenRange[0]);
 			boolean validSecond = checkInputValidFormat(chosenRange[1]);
